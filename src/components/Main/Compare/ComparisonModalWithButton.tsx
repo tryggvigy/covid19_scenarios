@@ -15,7 +15,7 @@ export function ComparisonModalWithButton({ files, onFilesChange }: ButtonForMod
 
   return (
     <>
-      <Button className="compare-button" type="button" color="success" onClick={toggleModalIsOpen} hidden>
+      <Button className="compare-button" type="button" color="success" onClick={toggleModalIsOpen}>
         {`Compare`}
       </Button>
       <Modal className="height-fit" centered size="lg" isOpen={modalIsOpen} toggle={toggleModalIsOpen}>
