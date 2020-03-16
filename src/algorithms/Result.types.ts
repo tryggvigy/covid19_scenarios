@@ -40,3 +40,7 @@ export interface AlgorithmResult {
 export interface UserResult {
   trajectory: SimulationTimePoint[]
 }
+
+export interface UserResult {
+  trajectory: SimulationTimePoint[]
+}
