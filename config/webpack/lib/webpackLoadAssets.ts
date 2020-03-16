@@ -21,13 +21,17 @@ export default function webpackLoadAssets({
   return [
     {
       // eslint-disable-next-line security/detect-unsafe-regex
-      test: /\.(eot|otf|webp|ttf|woff\d?|svg|png|jpe?g|gif)(\?.*)?$/i,
+      test: /\.(eot|otf|webp|ttf|woff\d?|svg|png|jpe?g|gif|pdf)(\?.*)?$/i,
       loader: 'url-loader',
       options: {
         limit: inlineSmallerThan,
         name,
         publicPath,
       },
+    },
+    {
+      test: /\.(txt|tex)$/i,
+      use: 'raw-loader',
     },
   ]
 }
