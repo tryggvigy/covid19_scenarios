@@ -28,7 +28,7 @@ export default function processUserResult(rawUserResult: string[][]): UserResult
         try {
           if (d === 'time'){
             newRow[d] = new Date(row[i]);
-          } else if (columns.find(d) >= 0){
+          } else if (columns.find(column => d === column)){
             newRow[d] = parseFloat(row[i]);
           }
         } catch (e) {
