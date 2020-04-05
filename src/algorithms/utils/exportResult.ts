@@ -1,7 +1,11 @@
 import JSZip from 'jszip'
+import JSPDF from 'jsPDF'
+import html2canvas from 'html2canvas'
 import { saveAs } from 'file-saver'
 import { AlgorithmResult } from '../types/Result.types'
 import { exportSimulation } from '../model'
+
+window.html2canvas = html2canvas
 
 export function isBlobApiSupported() {
   try {
@@ -44,6 +48,59 @@ export async function exportAll(result: AlgorithmResult) {
 
   const zipFile = await zip.generateAsync({ type: 'blob' })
   saveAs(zipFile, 'covid.params.results.zip')
+}
+
+export function exportPdf() {
+  const element = document.body
+
+  html2canvas(element, {
+    imageTimeout: 30000,
+    backgroundColor: 'white',
+    allowTaint: true,
+    height: element.clientHeight,
+    width: element.clientWidth,
+    ignoreElements: (element) => {
+      // Ignore modal backdrop. We do this here because there is no way
+      // to add attributes to the react bootstrap modal backdrop.
+      if (element.classList.contains('modal-backdrop')) return true
+      return false
+    },
+    // Modify elements in the cloned document. This will only affect the PDF.
+    onclone: (document) => {
+      // If the severity card is collapsed, expand it.
+      const collapseCard = document.querySelector('.collapse')
+      if (collapseCard) collapseCard.classList.add('show')
+    },
+  })
+    .then((canvas) => {
+      const imgData = canvas.toDataURL('image/png')
+      const imgWidth = 210
+      const imgHeight = (canvas.height * imgWidth) / canvas.width
+      const pageHeight = 295
+      const doc = new JSPDF({
+        orientation: 'p',
+        unit: 'mm',
+        format: 'a4',
+        putOnlyUsedFonts: true,
+        floatPrecision: 16,
+      })
+      let heightLeft = imgHeight
+      let position = 0
+
+      doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight)
+
+      heightLeft -= pageHeight
+      while (heightLeft >= 0) {
+        position = heightLeft - imgHeight
+        doc.addPage()
+        doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight)
+        heightLeft -= pageHeight
+      }
+      return doc.save('covid_scenarios.pdf')
+    })
+    .catch((error) => {
+      console.error(error)
+    })
 }
 
 export function exportResult(result: AlgorithmResult) {

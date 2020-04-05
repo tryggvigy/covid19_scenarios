@@ -2,7 +2,7 @@ import React from 'react'
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader, Table } from 'reactstrap'
 import { useTranslation } from 'react-i18next'
 import { AlgorithmResult } from '../../../algorithms/types/Result.types'
-import { exportAll, exportParams, exportResult } from '../../../algorithms/utils/exportResult'
+import { exportAll, exportParams, exportResult, exportPdf } from '../../../algorithms/utils/exportResult'
 import ClipboardButton from '../../Buttons/ClipboardButton'
 
 export interface ExportSimulationDialogProps {
@@ -16,7 +16,14 @@ export default function ExportSimulationDialog({ showModal, toggleShowModal, res
   const { t } = useTranslation()
 
   return (
-    <Modal className="height-fit" centered size="lg" isOpen={showModal} toggle={toggleShowModal}>
+    <Modal
+      data-html2canvas-ignore
+      className="height-fit"
+      centered
+      size="lg"
+      isOpen={showModal}
+      toggle={toggleShowModal}
+    >
       <ModalHeader toggle={toggleShowModal}>{t('Export simulation')}</ModalHeader>
       <ModalBody>
         <Table>
@@ -29,6 +36,16 @@ export default function ExportSimulationDialog({ showModal, toggleShowModal, res
             </tr>
           </thead>
           <tbody>
+            <tr>
+              <td>covid_scenarios.pdf</td>
+              <td>{t('The simulation parameters and results')}</td>
+              <td>PDF</td>
+              <td>
+                <Button onClick={() => exportPdf()} color="primary" size="sm">
+                  {t('Download')}
+                </Button>
+              </td>
+            </tr>
             <tr>
               <td>covid.params.json</td>
               <td>{t('The simulation parameters')}</td>

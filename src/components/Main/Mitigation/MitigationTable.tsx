@@ -60,7 +60,7 @@ export function MitigationTable({ mitigationIntervals }: MitigationTableProps) {
                           max={1}
                         />
 
-                        <Button type="button" onClick={() => arrayHelpers.remove(index)}>
+                        <Button data-html2canvas-ignore type="button" onClick={() => arrayHelpers.remove(index)}>
                           <FaTrash />
                         </Button>
                       </FormGroup>
@@ -72,6 +72,7 @@ export function MitigationTable({ mitigationIntervals }: MitigationTableProps) {
             <Row>
               <Col>
                 <Button
+                  data-html2canvas-ignore
                   type="button"
                   onClick={() => {
                     const interval = suggestNextMitigationInterval(mitigationIntervals)

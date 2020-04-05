@@ -29,7 +29,7 @@ function NavigationBar({ navLinks, location }: NavigationBarProps) {
           return <NavigationLink key={url} url={url} content={text} active={location.pathname === url} />
         })}
       </ul>
-      <div>
+      <div data-html2canvas-ignore>
         <LanguageSwitcher />
       </div>
     </nav>

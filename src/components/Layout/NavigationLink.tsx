@@ -12,7 +12,7 @@ export default function NavigationLink<T>({ active, content, url }: NavigationLi
   const activeClass = active ? 'active' : ''
 
   return (
-    <li className={`nav-item ${activeClass}`}>
+    <li {...(active ? {} : { 'data-html2canvas-ignore': 'true' })} className={`nav-item ${activeClass}`}>
       <Link className="nav-link" to={url}>
         {content}
       </Link>

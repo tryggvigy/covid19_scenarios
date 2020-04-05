@@ -116,7 +116,7 @@ function ResultsCardFunction({
         defaultCollapsed={false}
       >
         <Row className="mb-4">
-          <Col xs={12} sm={6} md={4}>
+          <Col xs={12} sm={6} md={4} data-html2canvas-ignore>
             <div className="btn-container mb-3">
               <Button
                 className="run-button"
@@ -169,7 +169,7 @@ function ResultsCardFunction({
             </p>
           </Col>
         </Row>
-        <Row noGutters hidden={!result} className="mb-4">
+        <Row noGutters hidden={!result} className="mb-4" data-html2canvas-ignore>
           <div className="mr-4" data-testid="LogScaleSwitch">
             <FormSwitch
               identifier="logScale"
